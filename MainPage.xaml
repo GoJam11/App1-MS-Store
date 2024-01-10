@@ -74,7 +74,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Padding="36">
+        <StackPanel VerticalAlignment="Center"  Padding="36">
             <TextBlock Grid.Row="0"  Foreground="White" Text="Photo and video editing apps" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24"/>
             <TextBlock Grid.Row="1" Foreground="White" Text="Turn your favorite photos and videos into works of art with these great apps" TextWrapping="Wrap" Margin="0,0,0,36"/>
             <Button Grid.Row="2" Foreground="White" Content="查看全部" Style="{StaticResource ButtonPrimary}" IsTabStop="False">
