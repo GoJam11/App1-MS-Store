@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <Style x:Key="ButtonWithoutOutline" TargetType="Button">
+        <Style x:Key="ButtonPrimary" TargetType="Button">
             <Setter Property="Background" Value="#14FFFFFF"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="4"/>
@@ -23,31 +23,17 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                             <VisualStateManager.VisualStateGroups>
-                                <!-- 定义常规状态 -->
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                    </VisualState>
                                     <VisualState x:Name="PointerOver">
-                                        <!-- 定义鼠标悬停在按钮上时的样式 -->
                                         <VisualState.Setters>
                                             <Setter Target="ButtonBorder.Background" Value="#1AFFFFFF"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
-                                        <!-- 定义按钮按下时的样式 -->
                                         <VisualState.Setters>
                                             <Setter Target="ButtonBorder.Background"  Value="#1AFFFFFF"/>
                                         </VisualState.Setters>
                                     </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <!-- 定义按钮禁用时的样式 -->
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="FocusStates">
-                                    <!-- 移除焦点时的边框 -->
-                                    <VisualState x:Name="Focused" />
-                                    <VisualState x:Name="Unfocused" />
-                                    <VisualState x:Name="PointerFocused" />
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter 
@@ -61,10 +47,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ButtonMini" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" 
+                                Background="#eff6fc"
+                                CornerRadius="4"
+                                Padding="8,2,8,3">
+                            <ContentPresenter 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/c6f395d0-f3bc-4444-bdcd-4703c36a20df.jpg" Stretch="UniformToFill"></ImageBrush>
+            <ImageBrush ImageSource="Assets/background.jpg" Stretch="UniformToFill"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -73,12 +77,72 @@
         <StackPanel Padding="36">
             <TextBlock Grid.Row="0"  Foreground="White" Text="Photo and video editing apps" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,24"/>
             <TextBlock Grid.Row="1" Foreground="White" Text="Turn your favorite photos and videos into works of art with these great apps" TextWrapping="Wrap" Margin="0,0,0,36"/>
-            <Button Grid.Row="2" Foreground="White" Content="查看全部" Style="{StaticResource ButtonWithoutOutline}" IsTabStop="False">
+            <Button Grid.Row="2" Foreground="White" Content="查看全部" Style="{StaticResource ButtonPrimary}" IsTabStop="False">
             </Button>
         </StackPanel>
-        <Grid Grid.Column="1" >
-            <Grid Width="140" Height="224" Background="AliceBlue"></Grid>
+        <Grid Grid.Column="1" Margin="0,0,36,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                Content="&lt;"
+                Click="PreviousPage_Click"/>
+            <ScrollViewer x:Name="OuterScrollViewer" Grid.Column="1"   HorizontalScrollBarVisibility="Auto">
+
+                <ListView x:Name="MyListView" 
+                      ScrollViewer.HorizontalScrollMode="Enabled"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate x:DataType="local:MyDataModel">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="140" Height="224" Background="#a8ffffff" Margin="0,0,12,0" CornerRadius="16">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="#454545" Offset="0.0"/>
+                                                <GradientStop Color="#454545" Offset="1.0"/>
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                        <Image Source="Assets/logo.png" Stretch="UniformToFill"/>
+                                    </Grid>
+
+                                    <StackPanel Grid.Row="1" Padding="16,4,16,12">
+                                        <TextBlock Text="{x:Bind Title}" Height="40" Margin="0,8,0,8"></TextBlock>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="4.5 ★" Grid.Column='0'></TextBlock>
+                                            <Button Grid.Column="1" Foreground="#005FB8" Content="免费下载" Height="22" FontSize="12" Style="{StaticResource ButtonMini}" IsTabStop="False"></Button>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+            <Button Grid.Column="2"
+                Content="&gt;"
+                Click="NextPage_Click"/>
         </Grid>
+
     </Grid>
 </Page>
 

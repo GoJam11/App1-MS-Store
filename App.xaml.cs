@@ -79,7 +79,7 @@ namespace App1
                 appView.SetPreferredMinSize(new Size(600, 300));
 
                 // 设置窗口的初始大小
-                appView.TryResizeView(new Size(800, 300));
+                appView.TryResizeView(new Size(960, 300));
             }
         }
 
