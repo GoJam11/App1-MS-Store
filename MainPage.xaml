@@ -87,10 +87,11 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
+                    CornerRadius="100"
+                    Background="White"
                 Content="&lt;"
                 Click="PreviousPage_Click"/>
             <ScrollViewer x:Name="OuterScrollViewer" Grid.Column="1"   HorizontalScrollBarVisibility="Auto">
-
                 <ListView x:Name="MyListView" 
                       ScrollViewer.HorizontalScrollMode="Enabled"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -139,6 +140,8 @@
                 </ListView>
             </ScrollViewer>
             <Button Grid.Column="2"
+                    CornerRadius="100"
+                    Background="White"
                 Content="&gt;"
                 Click="NextPage_Click"/>
         </Grid>
